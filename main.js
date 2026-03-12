@@ -28,22 +28,39 @@ const earthTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoo
 
 // Crée un sphere sur la texture de la terre
 const geometry = new THREE.SphereGeometry(10, 64, 64); // Plus de segments (64) pour une sphère bien ronde
-const material = new THREE.MeshBasicMaterial({ map: earthTexture }); 
+const material = new THREE.MeshBasicMaterial({ map: earthTexture }); // Applique la texture de la terre au matériau
 const earth = new THREE.Mesh(geometry, material);
 scene.add(earth);
 
 // Crée l'animation pour que ça bouge
+let isRotating = true;
+
 function animate() {
     requestAnimationFrame(animate);
 
-    // Faire tourner le sphere à chaque frame
-    earth.rotation.y += 0.005;
+    // 2. On n'applique la rotation que si isRotating est vrai
+    if (isRotating) {
+        earth.rotation.y += 0.005;
+    }
 
     renderer.render(scene, camera);
 }
 
-// Lance l'animation
+// 3. Écouteur pour arrêter la rotation au mousedown
+// On utilise 'window' ou 'renderer.domElement' selon tes besoins
+window.addEventListener("mousedown", () => {
+    isRotating = false; // La planète s'arrête
+}, false);
+
+// 4. (Optionnel) Écouteur pour relancer la rotation quand on relâche
+window.addEventListener("mouseup", () => {
+    isRotating = false; // La planète repart
+}, false);
+
 animate();
+
+
+// Lance l'animation
 
 
 /* Cette partie était pour mettre une music de fond mais y a pas de bouton qui permet d'arreter la musique
