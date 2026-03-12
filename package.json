@@ -1,0 +1,25 @@
+{
+  "name": "projet_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelvinMMM/Projet-js-iris-melvin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MelvinMMM/Projet-js-iris-melvin/issues"
+  },
+  "homepage": "https://github.com/MelvinMMM/Projet-js-iris-melvin#readme",
+  "dependencies": {
+    "three": "^0.183.2",
+    "vite": "^7.3.1"
+  }
+}
