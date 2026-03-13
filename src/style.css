@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+
+h1 {
+    position: absolute;
+    color: white;
+}
