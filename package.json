@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/MelvinMMM/Projet-js-iris-melvin#readme",
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "tailwindcss": "^4.2.1",
     "three": "^0.183.2",
     "vite": "^7.3.1"
   }

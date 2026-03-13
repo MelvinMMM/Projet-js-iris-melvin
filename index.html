@@ -1,28 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/style.css" rel="stylesheet" />
+
     <title>Globe interactif avec Globe.gl</title>
     <script src="//unpkg.com/globe.gl"></script>
     <style>
-        body { margin: 0; overflow: hidden; background-color: #000; }
-        #globeViz { width: 100vw; height: 100vh; }
-        button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000;
+      }
+      #globeViz {
+        width: 100vw;
+        height: 100vh;
+      }
+      button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
-    <div id="globe"></div>
+  </head>
+  <body>
+    
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+
     <button id="mouvement">Démarrer/Arrêter la rotation</button>
+    <div id="globe"></div>
+
     <script type="module" src="main.js"></script>
-</body>
+  </body>
 </html>
