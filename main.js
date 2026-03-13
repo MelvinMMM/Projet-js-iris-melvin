@@ -6,7 +6,7 @@ const CLOUDS_ALT = 0.004;
 const cloudSpeedRotation = -0.006;
 
 // Création de la Terre avec les textures et le relief
-const earth = new Globe(document.getElementById('globe'), { animateIn: true })
+const earth = new Globe(document.getElementById('globe'), { animateIn: false })
     .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg')
     .bumpImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png');
 
@@ -30,8 +30,17 @@ new THREE.TextureLoader().load(cloudsUrl, cloudsTexture => {
 // Lorsque l'on clique sur la Terre, la caméra se déplace vers le point cliqué et la rotation automatique s'active  
 earth.onGlobeClick(({ lat, lng }, event) => {
     earth.pointOfView({ lat, lng, altitude: 0.4 }, 1000);
-    earth.controls.autoRotate = true;
 });
+
+const data = [
+    { lat: 48.8566, lng: 2.3522, size: 0.001, color: 'red' }, // Paris
+    { lat: 40.7128, lng: -74.0060, size: 0.001, color: 'blue' }, // New York
+];
+
+earth.pointsData(data)
+    .pointColor('color')
+    .pointAltitude('size')
+    .pointRadius(0.5);
 
 // Lorsque l'on clique sur la souris, la rotation automatique s'arrête, et lorsqu'on relâche le click, elle reprend
 window.addEventListener("mousedown", () => {
