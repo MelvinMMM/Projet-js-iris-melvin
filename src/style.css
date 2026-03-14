@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+/********** Personnalisation globale **********/
 
-h1 {
-    position: absolute;
-    color: white;
+#globe {
+    display: block;
+    width: 500px;
+    height: 500px;
 }
