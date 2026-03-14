@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/********** Personnalisation globale **********/
+
+#globe {
+    display: block;
+    width: 500px;
+    height: 500px;
+}

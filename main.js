@@ -1,65 +1,72 @@
-// On importe tout de Three.js dans notre code
 import * as THREE from 'three';
-// On importe OrbitControl de Three/addons dans notre code
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Globe from 'globe.gl';
 
-// Crée la scène 3D
-const scene = new THREE.Scene();
+const earthDiv = document.getElementById('globe');
 
-// Crée la caméra
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.z = 25; // recule la caméra pour voir le sphere en entier
+// Création du globe
+const earth = Globe()(earthDiv, {animateIn: false})
+    .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg')
+    .bumpImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png')
+    .width(earthDiv.offsetWidth);
 
-// Crée le rendu et le met dans le HTML
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+earth.controls().autoRotate = true;
+earth.controls().autoRotateSpeed = 0.35;
 
-// Elle permet de donner le contrôle à la souris
-const controls = new OrbitControls( camera, renderer.domElement );
-controls.update();
+// Les nuages
+new THREE.TextureLoader().load('./assets/clouds.png', cloudsTexture => {
+    const clouds = new THREE.Mesh(
+        new THREE.SphereGeometry(earth.getGlobeRadius() * (1 + 0.005), 75, 75),
+        new THREE.MeshPhongMaterial({ map: cloudsTexture, transparent: true })
+    );
+    earth.scene().add(clouds);
 
-// Création du chargeur de textures
-const textureLoader = new THREE.TextureLoader();
+    (function rotateClouds() {
+        clouds.rotation.y += -0.005 * Math.PI / 180;
+        requestAnimationFrame(rotateClouds);
+    })();
+});
 
-// Chargement de l'image de la Terre
-// J'ai utilisé une URL d'une texture de la terre sur GitHub (dépôt de Three.js)
-const earthTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
+// Coordonnées au pif pour tester
+const data = [
+    { lat: 48.8566, lng: 2.3522, size: 0.001, color: 'red', label: 'Paris' },
+    { lat: 40.7128, lng: -74.0060, size: 0.001, color: 'blue', label: 'New York' },
+];
 
-// Crée un sphere sur la texture de la terre
-const geometry = new THREE.SphereGeometry(10, 64, 64); // Plus de segments (64) pour une sphère bien ronde
-const material = new THREE.MeshBasicMaterial({ map: earthTexture }); 
-const earth = new THREE.Mesh(geometry, material);
-scene.add(earth);
-
-// Crée l'animation pour que ça bouge
-function animate() {
-    requestAnimationFrame(animate);
-
-    // Faire tourner le sphere à chaque frame
-    earth.rotation.y += 0.005;
-
-    renderer.render(scene, camera);
-}
-
-// Lance l'animation
-animate();
+earth.pointsData(data)
+    .pointAltitude(0)    // On enlève de la hauteur (effet bâton/cône)
+    .pointRadius(0.2);   // Diamètre du marqueur
 
 
-/* Cette partie était pour mettre une music de fond mais y a pas de bouton qui permet d'arreter la musique
-   Du coup, je l'ai mis en commentaire pour l'instant et je l'ai fait car j'aime la musique tu connais :D */
 
-// // Crée un AudioListener pour l'ajouter à la caméra ()
-// const listener = new THREE.AudioListener();
-// camera.add( listener );
-// // Crée un Audio pour ajouter du son
-// const sound = new THREE.Audio( listener );
-// // Charge le son et le met dans le buffer de AudioLoader
-// const audioLoader = new THREE.AudioLoader();
-// // Set le son pour qu'il joue, loop, volume...
-// audioLoader.load( 'alors la 2.mp3', function( buffer ) {
-// 	sound.setBuffer( buffer );
-// 	sound.setLoop( true );
-// 	sound.setVolume( 0.5 );
-// 	sound.play();
-// });
+// Quand on click sur le globe, on se déplace vers le point cliqué
+earth.onGlobeClick(({ lat, lng }) => {
+    earth.pointOfView({ lat, lng, altitude: 0.5 }, 1000);
+});
+
+// Quand on clique et maintient le clic, on arrête la rotation automatique du globe, et quand on relâche, on la redémarre
+window.addEventListener("mousedown", () => {
+    earth.controls.autoRotate = false;
+}, false);
+
+window.addEventListener("mouseup", () => {
+    earth.controls.autoRotate = true;
+}, false);
+
+
+// quand on click sur le boutton, on arrête ou on démarre la rotation automatique du globe et on change le texte du bouton
+const movement = document.getElementById('movement');
+let textButton = "STOP";
+movement.textContent = textButton;
+movement.addEventListener('click', () => {
+    earth.controls().autoRotate = !earth.controls().autoRotate;
+    const Rotating = earth.controls().autoRotate;
+    textButton = Rotating ? "STOP" : "START";
+    movement.textContent = textButton;
+});
+
+// Quand on click sur le boutton, on dézoome sur le globe
+const zoomOut = document.getElementById('zoomOut');
+console.log(zoomOut);
+zoomOut.addEventListener('click', () => {
+    earth.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1000);
+});
