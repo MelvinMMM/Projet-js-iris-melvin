@@ -70,3 +70,79 @@ console.log(zoomOut);
 zoomOut.addEventListener('click', () => {
     earth.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1000);
 });
+
+
+// Récupérér les données de l'API et les afficher sur le globe
+async function loadData() {
+    const data = await fetchData();
+    console.log("Données récupérées :", data);
+
+//     const data = [
+//     { lat: 48.8566, lng: 2.3522, size: 0.001, color: 'red', label: 'Paris' },
+//     { lat: 40.7128, lng: -74.0060, size: 0.001, color: 'blue', label: 'New York' },
+// ];
+
+
+    const fireData = data.events
+        .filter(event => event.categories[0].id === 8)
+        .map(event => {
+            return {
+                lat: event.geometries[0].coordinates[1], // Latitude
+                lng: event.geometries[0].coordinates[0], // Longitude
+                size: 0.05,
+                color: '#ff4500', // Orange pour les feux
+                label: event.title,
+                id: event.id,
+                pulsePeriod: 1200 + Math.random() * 1000
+            };
+        });
+
+    const seaData = data.events
+        .filter(event => event.categories[0].id === 15)
+        .map(event => {
+            return {
+                lat: event.geometries[0].coordinates[1], // Latitude
+                lng: event.geometries[0].coordinates[0], // Longitude
+                size: 0.05,
+                color: '#1e90ff', // Bleu pour les tempêtes en mer
+                label: event.title,
+                id: event.id,
+                pulsePeriod: 1200 + Math.random() * 1000
+            };
+        });
+        const volcaData = data.events
+        .filter(event => event.categories[0].id === 12)
+        .map(event => {
+            return {
+                lat: event.geometries[0].coordinates[1], // Latitude
+                lng: event.geometries[0].coordinates[0], // Longitude
+                size: 0.05,
+                color: '#ffde21', // Jaune pour les volcans
+                label: event.title,
+                id: event.id,
+                pulsePeriod: 1200 + Math.random() * 1000
+            };
+        });
+    const markersData = [...fireData, ...seaData, ...volcaData];
+
+    earth.pointsData(markersData)
+        .pointAltitude(0.01) // Rayon visuel 1.01, évite le z-fighting
+        .pointRadius(0.2)
+        .pointColor('color');
+
+    earth.ringsData(markersData)
+        .ringColor('color')
+        .ringMaxRadius(1.2)
+        .ringPropagationSpeed(0.7)
+        .ringRepeatPeriod('pulsePeriod');
+
+
+
+    console.log("Données formatées pour les tempêtes en mer :", seaData);
+    console.log("Données formatées pour les feux :", fireData);
+    console.log("Données formatées pour les volcans :", volcaData);
+    
+
+}
+
+loadData();
