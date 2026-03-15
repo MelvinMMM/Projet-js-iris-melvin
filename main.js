@@ -26,17 +26,6 @@ new THREE.TextureLoader().load('./assets/clouds.png', cloudsTexture => {
     })();
 });
 
-// Coordonnées au pif pour tester
-const data = [
-    { lat: 48.8566, lng: 2.3522, size: 0.001, color: 'red', label: 'Paris' },
-    { lat: 40.7128, lng: -74.0060, size: 0.001, color: 'blue', label: 'New York' },
-];
-
-earth.pointsData(data)
-    .pointAltitude(0)    // On enlève de la hauteur (effet bâton/cône)
-    .pointRadius(0.2);   // Diamètre du marqueur
-
-
 
 // Quand on click sur le globe, on se déplace vers le point cliqué
 earth.onGlobeClick(({ lat, lng }) => {
