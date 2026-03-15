@@ -5,8 +5,9 @@ const earthDiv = document.getElementById('globe');
 
 // Création du globe
 const earth = Globe()(earthDiv, {animateIn: false})
-    .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg')
-    .bumpImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png')
+    .globeImageUrl('./assets/earth-blue-marble.jpg')
+    .bumpImageUrl('./assets/earth-topology.png')
+    .backgroundImageUrl('./assets/night-sky.png')
     .width(earthDiv.offsetWidth);
 
 earth.controls().autoRotate = true;
