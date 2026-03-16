@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Globe from 'globe.gl';
+import { fetchData } from './components/app.js';
 
 const earthDiv = document.getElementById('globe');
 
@@ -35,11 +36,11 @@ earth.onGlobeClick(({ lat, lng }) => {
 
 // Quand on clique et maintient le clic, on arrête la rotation automatique du globe, et quand on relâche, on la redémarre
 window.addEventListener("mousedown", () => {
-    earth.controls.autoRotate = false;
+    earth.controls().autoRotate = false;
 }, false);
 
 window.addEventListener("mouseup", () => {
-    earth.controls.autoRotate = true;
+    earth.controls().autoRotate = true;
 }, false);
 
 
@@ -67,18 +68,12 @@ async function loadData() {
     const data = await fetchData();
     console.log("Données récupérées :", data);
 
-//     const data = [
-//     { lat: 48.8566, lng: 2.3522, size: 0.001, color: 'red', label: 'Paris' },
-//     { lat: 40.7128, lng: -74.0060, size: 0.001, color: 'blue', label: 'New York' },
-// ];
-
-
     const fireData = data.events
-        .filter(event => event.categories[0].id === 8)
+        .filter(event => event.categories[0].id === 'wildfires')
         .map(event => {
             return {
-                lat: event.geometries[0].coordinates[1], // Latitude
-                lng: event.geometries[0].coordinates[0], // Longitude
+                lat: event.geometry[0].coordinates[1], // Latitude
+                lng: event.geometry[0].coordinates[0], // Longitude
                 size: 0.05,
                 color: '#ff4500', // Orange pour les feux
                 label: event.title,
@@ -88,11 +83,11 @@ async function loadData() {
         });
 
     const seaData = data.events
-        .filter(event => event.categories[0].id === 15)
+        .filter(event => event.categories[0].id === 'seaLakeIce')
         .map(event => {
             return {
-                lat: event.geometries[0].coordinates[1], // Latitude
-                lng: event.geometries[0].coordinates[0], // Longitude
+                lat: event.geometry[0].coordinates[1], // Latitude
+                lng: event.geometry[0].coordinates[0], // Longitude
                 size: 0.05,
                 color: '#1e90ff', // Bleu pour les tempêtes en mer
                 label: event.title,
@@ -100,20 +95,47 @@ async function loadData() {
                 pulsePeriod: 1200 + Math.random() * 1000
             };
         });
-        const volcaData = data.events
-        .filter(event => event.categories[0].id === 12)
+    const volcaData = data.events
+        .filter(event => event.categories[0].id === 'volcanoes')
         .map(event => {
             return {
-                lat: event.geometries[0].coordinates[1], // Latitude
-                lng: event.geometries[0].coordinates[0], // Longitude
+                lat: event.geometry[0].coordinates[1], // Latitude
+                lng: event.geometry[0].coordinates[0], // Longitude
                 size: 0.05,
-                color: '#ffde21', // Jaune pour les volcans
+                color: '#ff00ff', // Magenta pour les volcans
                 label: event.title,
                 id: event.id,
                 pulsePeriod: 1200 + Math.random() * 1000
             };
         });
-    const markersData = [...fireData, ...seaData, ...volcaData];
+    const stormData = data.events
+        .filter(event => event.categories[0].id === 'severeStorms')
+        .map(event => {
+            return {
+                lat: event.geometry[0].coordinates[1], // Latitude
+                lng: event.geometry[0].coordinates[0], // Longitude
+                size: 0.05,
+                color: '#f0f0f0', // blanc pour les tempêtes
+                label: event.title,
+                id: event.id,
+                pulsePeriod: 1200 + Math.random() * 1000
+            };
+        });
+
+    const earthquakeData = data.events
+        .filter(event => event.categories[0].id === 'earthquakes')
+        .map(event => {
+            return {
+                lat: event.geometry[0].coordinates[1], // Latitude
+                lng: event.geometry[0].coordinates[0], // Longitude
+                size: 0.05,
+                color: '#ffd700', // jaune foncé pour les tremblements de terre
+                label: event.title,
+                id: event.id,
+                pulsePeriod: 1200 + Math.random() * 1000
+            };
+        });
+    const markersData = [...fireData, ...seaData, ...volcaData, ...stormData, ...earthquakeData];
 
     earth.pointsData(markersData)
         .pointAltitude(0.01) // Rayon visuel 1.01, évite le z-fighting
@@ -125,14 +147,16 @@ async function loadData() {
         .ringMaxRadius(1.2)
         .ringPropagationSpeed(0.7)
         .ringRepeatPeriod('pulsePeriod');
+    
 
 
 
     console.log("Données formatées pour les tempêtes en mer :", seaData);
     console.log("Données formatées pour les feux :", fireData);
     console.log("Données formatées pour les volcans :", volcaData);
+    console.log("Données formatées pour les tempêtes :", stormData);
+    console.log("Données formatées pour les tremblements de terre :", earthquakeData);
     
-
 }
 
 loadData();
