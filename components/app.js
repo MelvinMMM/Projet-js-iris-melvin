@@ -1,7 +1,7 @@
 export async function fetchData() {
 
   try {
-    const response = await fetch("https://eonet.gsfc.nasa.gov/api/v3/events", {
+    const response = await fetch("https://eonet.gsfc.nasa.gov/api/v2.1/events", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'

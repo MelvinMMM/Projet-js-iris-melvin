@@ -56,7 +56,6 @@ movement.addEventListener('click', () => {
 
 // Quand on click sur le boutton, on dézoome sur le globe
 const zoomOut = document.getElementById('zoomOut');
-console.log(zoomOut);
 zoomOut.addEventListener('click', () => {
     earth.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1000);
 });
