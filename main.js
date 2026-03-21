@@ -36,11 +36,11 @@ earth.onGlobeClick(({ lat, lng }) => {
 
 // Quand on clique et maintient le clic, on arrête la rotation automatique du globe, et quand on relâche, on la redémarre
 window.addEventListener("mousedown", () => {
-    earth.controls().autoRotate = false;
+    earth.controls.autoRotate = false;
 }, false);
 
 window.addEventListener("mouseup", () => {
-    earth.controls().autoRotate = true;
+    earth.controls.autoRotate = true;
 }, false);
 
 
@@ -57,7 +57,6 @@ movement.addEventListener('click', () => {
 
 // Quand on click sur le boutton, on dézoome sur le globe
 const zoomOut = document.getElementById('zoomOut');
-console.log(zoomOut);
 zoomOut.addEventListener('click', () => {
     earth.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1000);
 });
@@ -158,5 +157,6 @@ async function loadData() {
     console.log("Données formatées pour les tremblements de terre :", earthquakeData);
     
 }
+
 
 loadData();

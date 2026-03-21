@@ -1,7 +1,7 @@
 export async function fetchData() {
 
   try {
-    const responseNasa = await fetch("https://eonet.gsfc.nasa.gov/api/v3/events?status=all&limit=200", {
+    const responseNasa = await fetch("https://eonet.gsfc.nasa.gov/api/v3/events?status=all&limit=1000", {
       // limit = 200 pour récupérer plus d'événements : 
         // modifie pour voir la différence ex : limit 3000 pour récupérer encore plus d'événements 
         // ou retire le limit 
