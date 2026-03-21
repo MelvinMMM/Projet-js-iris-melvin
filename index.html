@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Event-Horizon</title>
 </head>
 
@@ -28,9 +29,8 @@
                 </div>
             </nav>
         </section>
-        <!-- Card filtre flottante au-dessus du globe -->
         <div
-            class="absolute top-4 left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-52 transition-all">
+            class="absolute top-4 left-24 md:left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-44 md:w-52 transition-all">
             <details class="group p-5">
                 <summary class="flex justify-between items-center text-xl font-semibold cursor-pointer list-none">
                     Filters
@@ -73,6 +73,32 @@
                     </div>
                 </div>
             </details>
+        </div>
+        <div
+            class="absolute z-10 bottom-4 left-24 md:left-auto right-4 md:w-full max-w-md bg-white p-2 md:p-4 rounded-lg shadow mt-4">
+            <canvas id="fireLineChart"></canvas>
+        </div>
+        <div id="countryInfoCard"
+            class="absolute z-10 top-20 md:top-4 right-4 bg-zinc-900/90 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-[calc(100%-7rem)] md:w-64 p-3 md:p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+            <div class="flex items-center gap-3 mb-3 border-b border-zinc-700 pb-2">
+                <img id="countryFlag" src="" alt="Flag" class="w-10 h-auto rounded-sm shadow-md hidden">
+                <h2 id="countryName" class="text-lg font-bold leading-tight">Hover over a country</h2>
+            </div>
+
+            <div class="space-y-2 text-sm text-zinc-400">
+                <p class="flex justify-between">
+                    <span>🕒 Local time</span>
+                    <span id="countryTime" class="text-white font-medium">...</span>
+                </p>
+                <p class="flex justify-between">
+                    <span>🗣️ Languages</span>
+                    <span id="countryLang" class="text-white font-medium text-right truncate w-32">...</span>
+                </p>
+                <p class="flex justify-between">
+                    <span>👥 Population</span>
+                    <span id="countryPop" class="text-white font-medium">...</span>
+                </p>
+            </div>
         </div>
         <main id="globe" class="w-full flex-1 h-full active:cursor-grabbing"></main>
     </div>
