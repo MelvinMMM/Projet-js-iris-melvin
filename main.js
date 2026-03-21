@@ -5,7 +5,7 @@ import { fetchData } from './components/app.js';
 const earthDiv = document.getElementById('globe');
 
 // Création du globe
-const earth = Globe()(earthDiv, {animateIn: false})
+const earth = Globe()(earthDiv, { animateIn: false })
     .globeImageUrl('assets/earth-blue-marble.jpg')
     .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/night-sky.png')
@@ -134,28 +134,49 @@ async function loadData() {
                 pulsePeriod: 1200 + Math.random() * 1000
             };
         });
-    const markersData = [...fireData, ...seaData, ...volcaData, ...stormData, ...earthquakeData];
 
-    earth.pointsData(markersData)
-        .pointAltitude(0.01) // Rayon visuel 1.01, évite le z-fighting
-        .pointRadius(0.2)
-        .pointColor('color');
+    const markersData = {
+        'wildfires': fireData,
+        'seaLakeIce': seaData,
+        'volcanoes': volcaData,
+        'severeStorms': stormData,
+        'earthquakes': earthquakeData
+    };
 
-    earth.ringsData(markersData)
-        .ringColor('color')
-        .ringMaxRadius(1.2)
-        .ringPropagationSpeed(0.7)
-        .ringRepeatPeriod('pulsePeriod');
-    
+    function updateGlobeData() {
+        let activeMarkers = [];
+        const checkboxes = document.querySelectorAll('#filters-container input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                activeMarkers = activeMarkers.concat(markersData[checkbox.id]);
+            }
+        });
 
+        earth.pointsData(activeMarkers)
+            .pointAltitude(0.01)
+            .pointRadius(0.2)
+            .pointColor('color');
 
+        earth.ringsData(activeMarkers)
+            .ringColor('color')
+            .ringMaxRadius(1.2)
+            .ringPropagationSpeed(0.7)
+            .ringRepeatPeriod('pulsePeriod');
+    }
+
+    const checkboxes = document.querySelectorAll('#filters-container input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateGlobeData);
+    });
+
+    updateGlobeData();
 
     console.log("Données formatées pour les tempêtes en mer :", seaData);
     console.log("Données formatées pour les feux :", fireData);
     console.log("Données formatées pour les volcans :", volcaData);
     console.log("Données formatées pour les tempêtes :", stormData);
     console.log("Données formatées pour les tremblements de terre :", earthquakeData);
-    
+
 }
 
 
