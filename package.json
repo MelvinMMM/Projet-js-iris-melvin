@@ -1,0 +1,30 @@
+{
+  "name": "projet_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelvinMMM/Projet-js-iris-melvin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/MelvinMMM/Projet-js-iris-melvin/issues"
+  },
+  "homepage": "https://github.com/MelvinMMM/Projet-js-iris-melvin#readme",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "globe.gl": "^2.45.1",
+    "tailwindcss": "^4.2.1",
+    "three": "^0.183.2",
+    "vite": "^7.3.1"
+  }
+}
