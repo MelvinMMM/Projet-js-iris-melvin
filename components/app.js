@@ -1,4 +1,4 @@
-export async function fetchData() {
+async function fetchData() {
 
   try {
     const responseNasa = await fetch("https://eonet.gsfc.nasa.gov/api/v3/events?status=all&limit=4000", {
@@ -55,7 +55,7 @@ export async function fetchData() {
   }
 }
 
-export async function fetchCountry() {
+async function fetchCountry() {
   try {
     const response = await fetch('/datasets/ne_110m_admin_0_countries.geojson');
 
@@ -70,7 +70,7 @@ export async function fetchCountry() {
   }
 }
 
-export async function restCountries(isoCode) {
+async function restCountries(isoCode) {
   try {
     const response = await fetch(`https://restcountries.com/v3.1/alpha/${isoCode}`);
 
@@ -119,7 +119,11 @@ export async function loadCountries(earth) {
 
       updateCountryDetails(isoCode);
     })
+    .onPolygonClick((d, e, { lat, lng }) => {
+      earth.pointOfView({ lat, lng, altitude: 0.5 }, 1000);
+    })
     .polygonsTransitionDuration(300);
+    return countriesData;
 }
 
 const countryCache = {};
@@ -416,4 +420,80 @@ export async function loadData(earth) {
       }
     }
   });
+  return data;
+}
+
+export function initSearch(earth, countriesData, eventsData) {
+    const searchInput = document.getElementById('search');
+    const searchResults = document.getElementById('searchResults');
+    let idSt;
+
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(idSt);
+        const query = e.target.value.toLowerCase().trim();
+
+        idSt = setTimeout(() => {
+            if (query === '') {
+                searchResults.classList.add('hidden');
+                searchResults.innerHTML = '';
+            } else {
+                const matchedCountries = countriesData.features.filter(c => {
+                    const name = c.properties.NAME || c.properties.ADMIN || '';
+                    return name.toLowerCase().startsWith(query);
+                }).slice(0, 5);
+
+                const matchedEvents = eventsData.events.filter(ev => {
+                    return ev.title.toLowerCase().includes(query);
+                }).slice(0, 5);
+
+                searchResults.innerHTML = '';
+
+                if (matchedCountries.length === 0 && matchedEvents.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'p-3 text-zinc-400';
+                    li.textContent = 'Aucun résultat';
+                    searchResults.appendChild(li);
+                } else {
+                    matchedCountries.forEach(country => {
+                        const li = document.createElement('li');
+                        li.className = 'p-3 hover:bg-zinc-700 cursor-pointer border-b border-zinc-700/50 flex justify-between items-center';
+                        li.innerHTML = `<span>🌍 ${country.properties.NAME || country.properties.ADMIN}</span>`;
+                        li.addEventListener('click', () => {
+                            searchInput.value = '';
+                            searchResults.classList.add('hidden');
+                            let coords = country.geometry.coordinates;
+                            if (country.geometry.type === "Polygon") {
+                                coords = coords[0];
+                            } else if (country.geometry.type === "MultiPolygon") {
+                                coords = coords[0][0];
+                            }
+                            if (coords && coords.length > 0) {
+                                earth.pointOfView({ lat: coords[0][1], lng: coords[0][0], altitude: 1.5 }, 1000);
+                            }
+                        });
+                        searchResults.appendChild(li);
+                    });
+
+                    matchedEvents.forEach(event => {
+                        const li = document.createElement('li');
+                        li.className = 'p-3 hover:bg-zinc-700 cursor-pointer border-b border-zinc-700/50 flex flex-col';
+                        li.innerHTML = `<span>⚠️ ${event.title}</span><span class="text-xs text-zinc-400">${event.categories[0].title}</span>`;
+                        li.addEventListener('click', () => {
+                            searchInput.value = '';
+                            searchResults.classList.add('hidden');
+                            earth.pointOfView({ lat: event.geometry[0].coordinates[1], lng: event.geometry[0].coordinates[0], altitude: 0.5 }, 1000);
+                        });
+                        searchResults.appendChild(li);
+                    });
+                }
+                searchResults.classList.remove('hidden');
+            }
+        }, 300);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.add('hidden');
+        }
+    });
 }

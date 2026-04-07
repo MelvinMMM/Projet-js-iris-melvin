@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Globe from 'globe.gl';
-import { loadCountries, loadData } from './components/app.js';
+import { loadCountries, loadData, initSearch } from './components/app.js';
 import LocationInfoBoxComponent from './components/locationInfoBox.js';
 
 const earthDiv = document.getElementById('globe');
@@ -92,7 +92,9 @@ earth.onPointClick((point) => {
 });
 
 Promise.all([loadCountries(earth), loadData(earth)])
-    .then(() => {
+    .then(([countriesData, eventsData]) => {
+        initSearch(earth, countriesData, eventsData);
+
         loadingElement.classList.add('opacity-0');
         setTimeout(() => {
             loadingElement.classList.add('hidden');
