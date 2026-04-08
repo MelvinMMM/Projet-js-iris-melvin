@@ -273,6 +273,12 @@ async function loadData() {
             }
         });
 
+        
+// feat: les ama de cercles en un unique point
+
+
+
+        // Les points lumineux
         earth.pointsData(activeMarkers)
             .pointAltitude(0.01)
             .pointRadius(0.2)
@@ -286,6 +292,7 @@ async function loadData() {
             </div>
         `);
 
+        // Les anneaux de pulsation
         earth.ringsData(activeMarkers)
             .ringColor('color')
             .ringMaxRadius(1.2)
