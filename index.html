@@ -10,9 +10,9 @@
 </head>
 
 <body>
-<div id="loading" class="m-auto w-full h-full bg-black flex flex-col items-center fixed z-100 transition-opacity duration-1000 ease-in-out">
-  <h1 class="text-white text-3xl font-bold mb-4 mt-8">Event-Horizon</h1>
-  <img src="assets/loading.gif" alt="loading" class="object-contain" />
+<div id="loading" class="m-auto w-full h-full flex flex-col items-center fixed z-100 transition-opacity duration-1000 ease-in-out display flex items-center justify-center bg-black">
+  <!-- <h1 class="text-white text-3xl font-bold mb-4 mt-8">Event-Horizon</h1> -->
+  <img src="assets/ellipsisLoading.svg" alt="loading" class="object-contain" /> 
 </div>
   <div class="flex h-screen w-full bg-black">
     <section class="w-25 bg-zinc-900/50 border-r border-zinc-800 py-6 px-3 flex flex-col z-10 shadow-2xl">
@@ -84,10 +84,10 @@
       <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="&#128269; Search..." class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1" />
       <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
     </div>
-    <div
+    <!-- <div
       class="absolute z-10 bottom-4 left-24 md:left-auto right-4 md:w-full max-w-md bg-white p-2 md:p-4 rounded-lg shadow mt-4">
       <canvas id="fireLineChart"></canvas>
-    </div>
+    </div> -->
     <div id="countryInfoCard"
       class="absolute z-10 top-20 md:top-4 right-4 bg-zinc-900/90 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-[calc(100%-7rem)] md:w-64 p-3 md:p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
       <div class="flex items-center gap-3 mb-3 border-b border-zinc-700 pb-2">
