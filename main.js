@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import Globe from 'globe.gl';
-import { loadCountries, loadData, initSearch } from './components/app.js';
+import i18next from './components/i18n.js';
+import { loadCountries, loadData, initSearch, updateDOMTranslation } from './components/app.js';
 import LocationInfoBoxComponent from './components/locationInfoBox.js';
 
 const earthDiv = document.getElementById('globe');
@@ -68,8 +69,7 @@ movement.textContent = textButton;
 movement.addEventListener('click', () => {
     earth.controls().autoRotate = !earth.controls().autoRotate;
     const Rotating = earth.controls().autoRotate;
-    textButton = Rotating ? "STOP" : "START";
-    movement.textContent = textButton;
+    movement.textContent = Rotating ? i18next.t('stop') : i18next.t('start');;
 });
 
 // Quand on click sur le boutton, on dézoome sur le globe
@@ -105,3 +105,4 @@ Promise.all([loadCountries(earth), loadData(earth)])
         loadingElement.innerHTML = "<h1>Failed to load data. Please try again later.</h1>";
     });
 
+updateDOMTranslation(earth);

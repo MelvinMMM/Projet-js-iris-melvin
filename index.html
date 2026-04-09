@@ -23,9 +23,9 @@
       <nav>
         <div class="space-y-7">
           <button id="movement"
-            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-lg"></button>
+            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-xs"></button>
           <span id="zoomOut"
-            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-lg">
+            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-xs">
             &#128228;
           </span>
         </div>
@@ -35,7 +35,7 @@
       class="absolute top-4 left-24 md:left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-44 md:w-52 transition-all">
       <details class="group p-3">
         <summary class="flex justify-between items-center text-l font-semibold cursor-pointer list-none">
-          Filters
+          <span data-i18n="filters">Filters</span>
           <span class="transition-transform duration-300 group-open:rotate-180">
             <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
               <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -44,7 +44,7 @@
         </summary>
 
         <div class="mt-4 pt-4 border-t border-zinc-700/50">
-          <h3 class="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-3">Category</h3>
+          <h3 class="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-3" data-i18n="category">Category</h3>
           <div id="filters-container" class="space-y-2 text-base">
             <div class="flex items-center gap-2">
               <input type="checkbox" id="wildfires" name="wildfires" value="Wildfires" checked
@@ -81,7 +81,7 @@
       </details>
     </div>
     <div class="absolute top-4 z-10 w-60 transition-all left-4 md:left-90">
-      <input type="text" id="search" placeholder="&#128269; Search..." class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1" />
+      <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="&#128269; Search..." class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1" />
       <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
     </div>
     <div
@@ -92,20 +92,20 @@
       class="absolute z-10 top-20 md:top-4 right-4 bg-zinc-900/90 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-[calc(100%-7rem)] md:w-64 p-3 md:p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
       <div class="flex items-center gap-3 mb-3 border-b border-zinc-700 pb-2">
         <img id="countryFlag" src="" alt="Flag" class="w-10 h-auto rounded-sm shadow-md hidden" />
-        <h2 id="countryName" class="text-lg font-bold leading-tight">Hover over a country</h2>
+        <h2 id="countryName" class="text-lg font-bold leading-tight" data-i18n="hoverCountry">Hover over a country</h2>
       </div>
 
       <div class="space-y-2 text-sm text-zinc-400">
         <p class="flex justify-between">
-          <span>🕒 Local time</span>
+          <span data-i18n="localTime">🕒 Local time</span>
           <span id="countryTime" class="text-white font-medium">...</span>
         </p>
         <p class="flex justify-between">
-          <span>🗣️ Languages</span>
+          <span data-i18n="languages">🗣️ Languages</span>
           <span id="countryLang" class="text-white font-medium text-right truncate w-32">...</span>
         </p>
         <p class="flex justify-between">
-          <span>👥 Population</span>
+          <span data-i18n="population">👥 Population</span>
           <span id="countryPop" class="text-white font-medium">...</span>
         </p>
       </div>

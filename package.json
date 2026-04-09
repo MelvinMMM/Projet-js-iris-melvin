@@ -23,6 +23,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
     "globe.gl": "^2.45.1",
+    "i18next": "^26.0.4",
+    "i18next-browser-languagedetector": "^8.2.1",
     "tailwindcss": "^4.2.1",
     "three": "^0.183.2",
     "vite": "^7.3.1"
