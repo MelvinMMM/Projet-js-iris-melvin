@@ -64,12 +64,21 @@ window.addEventListener("mouseup", () => {
 
 // quand on click sur le boutton, on arrête ou on démarre la rotation automatique du globe et on change le texte du bouton
 const movement = document.getElementById('movement');
-let textButton = "STOP";
-movement.textContent = textButton;
+movement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+</svg>
+`;
 movement.addEventListener('click', () => {
     earth.controls().autoRotate = !earth.controls().autoRotate;
     const Rotating = earth.controls().autoRotate;
-    movement.textContent = Rotating ? i18next.t('stop') : i18next.t('start');;
+    movement.innerHTML = Rotating ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+</svg>
+` : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+
+</svg>
+`;
 });
 
 // Quand on click sur le boutton, on dézoome sur le globe

@@ -1,123 +1,133 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Event-Horizon</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="/src/style.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <title>Event-Horizon</title>
-</head>
-
-<body>
-<div id="loading" class="m-auto w-full h-full flex flex-col items-center fixed z-100 transition-opacity duration-1000 ease-in-out display flex items-center justify-center bg-black">
-  <!-- <h1 class="text-white text-3xl font-bold mb-4 mt-8">Event-Horizon</h1> -->
-  <img src="assets/ellipsisLoading.svg" alt="loading" class="object-contain" /> 
-</div>
-  <div class="flex h-screen w-full bg-black">
-    <section class="w-25 bg-zinc-900/50 border-r border-zinc-800 py-6 px-3 flex flex-col z-10 shadow-2xl">
-      <div class="mb-6">
-        <img src="assets/logo.png" alt="logo" />
-      </div>
-
-      <nav>
-        <div class="space-y-7">
-          <button id="movement"
-            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-xs"></button>
-          <span id="zoomOut"
-            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-100 rounded-xl transition-all text-xs">
-            &#128228;
-          </span>
+  <body>
+    <div id="loading" class="m-auto w-full h-full flex flex-col items-center fixed z-100 transition-opacity duration-1000 ease-in-out display flex items-center justify-center bg-black">
+      <!-- <h1 class="text-white text-3xl font-bold mb-4 mt-8">Event-Horizon</h1> -->
+      <img src="assets/ellipsisLoading.svg" alt="loading" class="object-contain" />
+    </div>
+    <div class="flex h-screen w-full bg-transparent relative">
+      <section class="absolute w-25 h-full py-6 px-3 flex flex-col z-10 shadow-2xl items-center justify-between">
+        <div class="mb-6">
+          <img src="assets/icons8-géographie-30.png" alt="logo" />
         </div>
-      </nav>
-    </section>
-    <div
-      class="absolute top-4 left-24 md:left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-44 md:w-52 transition-all">
-      <details class="group p-3">
-        <summary class="flex justify-between items-center text-l font-semibold cursor-pointer list-none">
-          <span data-i18n="filters">Filters</span>
-          <span class="transition-transform duration-300 group-open:rotate-180">
-            <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
-              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+        <div>
+          <button
+            id="movement"
+            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800/40 hover:bg-zinc-700/55 border border-zinc-100 rounded-full transition-all text-xs p-2 mb-2 cursor-pointer  backdrop-blur-sm"
+            aria-label="Toggle globe rotation"
+          ></button>
+        </div>
+        <div>
+          <button
+            id="zoomOut"
+            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800/40 backdrop-blur-sm hover:bg-zinc-700/55 border border-zinc-100 rounded-full transition-all text-xs p-2 mb-2 cursor-pointer"
+            aria-label="Zoom out"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+              />
             </svg>
-          </span>
-        </summary>
+          </button>
+        </div>
+      </section>
+      <div class="absolute top-4 left-24 md:left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-44 md:w-52 transition-all">
+        <details class="group p-3">
+          <summary class="flex justify-between items-center text-l font-semibold cursor-pointer list-none">
+            <span data-i18n="filters">Filters</span>
+            <span class="transition-transform duration-300 group-open:rotate-180">
+              <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </summary>
 
-        <div class="mt-4 pt-4 border-t border-zinc-700/50">
-          <h3 class="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-3" data-i18n="category">Category</h3>
-          <div id="filters-container" class="space-y-2 text-base">
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="wildfires" name="wildfires" value="Wildfires" checked
-                class="accent-[#ff4500] check w-4 h-4 cursor-pointer" />
-              <label for="wildfires" class="cursor-pointer select-none">Wildfires</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="volcanoes" name="volcanoes" value="Volcanoes" checked
-                class="accent-[#ff00ff] check w-4 h-4 cursor-pointer" />
-              <label for="volcanoes" class="cursor-pointer select-none">Volcanoes</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="severeStorms" name="severe-storms" value="Severe Storms" checked
-                class="accent-[#f0f0f0] check w-4 h-4 cursor-pointer" />
-              <label for="severeStorms" class="cursor-pointer select-none">Severe Storms</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="seaLakeIce" name="seaLakeIce" value="Sea/Lake Ice" checked
-                class="accent-[#1e90ff] check w-4 h-4 cursor-pointer" />
-              <label for="seaLakeIce" class="cursor-pointer select-none">Sea/Lake Ice</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="earthquakes" name="earthquakes" value="Earthquakes" checked
-                class="accent-[#ffd700] check w-4 h-4 cursor-pointer" />
-              <label for="earthquakes" class="cursor-pointer select-none">Earthquakes</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="checkbox" id="floods" name="floods" value="Floods" checked
-                class="accent-[#00ffff] check w-4 h-4 cursor-pointer" />
-              <label for="floods" class="cursor-pointer select-none">Floods</label>
+          <div class="mt-4 pt-4 border-t border-zinc-700/50">
+            <h3 class="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-3" data-i18n="category">Category</h3>
+            <div id="filters-container" class="space-y-2 text-base">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="wildfires" name="wildfires" value="Wildfires" checked class="accent-[#ff4500] check w-4 h-4 cursor-pointer" />
+                <label for="wildfires" class="cursor-pointer select-none">Wildfires</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="volcanoes" name="volcanoes" value="Volcanoes" checked class="accent-[#ff00ff] check w-4 h-4 cursor-pointer" />
+                <label for="volcanoes" class="cursor-pointer select-none">Volcanoes</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="severeStorms" name="severe-storms" value="Severe Storms" checked class="accent-[#f0f0f0] check w-4 h-4 cursor-pointer" />
+                <label for="severeStorms" class="cursor-pointer select-none">Severe Storms</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="seaLakeIce" name="seaLakeIce" value="Sea/Lake Ice" checked class="accent-[#1e90ff] check w-4 h-4 cursor-pointer" />
+                <label for="seaLakeIce" class="cursor-pointer select-none">Sea/Lake Ice</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="earthquakes" name="earthquakes" value="Earthquakes" checked class="accent-[#ffd700] check w-4 h-4 cursor-pointer" />
+                <label for="earthquakes" class="cursor-pointer select-none">Earthquakes</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="floods" name="floods" value="Floods" checked class="accent-[#00ffff] check w-4 h-4 cursor-pointer" />
+                <label for="floods" class="cursor-pointer select-none">Floods</label>
+              </div>
             </div>
           </div>
-        </div>
-      </details>
-    </div>
-    <div class="absolute top-4 z-10 w-60 transition-all left-4 md:left-90">
-      <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="&#128269; Search..." class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1" />
-      <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
-    </div>
-    <!-- <div
+        </details>
+      </div>
+      <div class="absolute top-4 z-10 w-60 transition-all left-4 md:left-90">
+        <input
+          type="text"
+          id="search"
+          data-i18n-placeholder="searchPlaceholder"
+          placeholder="&#128269; Search..."
+          class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1"
+        />
+        <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
+      </div>
+      <!-- <div
       class="absolute z-10 bottom-4 left-24 md:left-auto right-4 md:w-full max-w-md bg-white p-2 md:p-4 rounded-lg shadow mt-4">
       <canvas id="fireLineChart"></canvas>
     </div> -->
-    <div id="countryInfoCard"
-      class="absolute z-10 top-20 md:top-4 right-4 bg-zinc-900/90 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-[calc(100%-7rem)] md:w-64 p-3 md:p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
-      <div class="flex items-center gap-3 mb-3 border-b border-zinc-700 pb-2">
-        <img id="countryFlag" src="" alt="Flag" class="w-10 h-auto rounded-sm shadow-md hidden" />
-        <h2 id="countryName" class="text-lg font-bold leading-tight" data-i18n="hoverCountry">Hover over a country</h2>
+      <div
+        id="countryInfoCard"
+        class="absolute z-10 top-20 md:top-4 right-4 bg-zinc-900/90 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-[calc(100%-7rem)] md:w-64 p-3 md:p-4 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <div class="flex items-center gap-3 mb-3 border-b border-zinc-700 pb-2">
+          <img id="countryFlag" src="" alt="Flag" class="w-10 h-auto rounded-sm shadow-md hidden" />
+          <h2 id="countryName" class="text-lg font-bold leading-tight" data-i18n="hoverCountry">Hover over a country</h2>
+        </div>
+
+        <div class="space-y-2 text-sm text-zinc-400">
+          <p class="flex justify-between">
+            <span data-i18n="localTime">🕒 Local time</span>
+            <span id="countryTime" class="text-white font-medium">...</span>
+          </p>
+          <p class="flex justify-between">
+            <span data-i18n="languages">🗣️ Languages</span>
+            <span id="countryLang" class="text-white font-medium text-right truncate w-32">...</span>
+          </p>
+          <p class="flex justify-between">
+            <span data-i18n="population">👥 Population</span>
+            <span id="countryPop" class="text-white font-medium">...</span>
+          </p>
+        </div>
+      </div>
+      <div id="location-info-box" class="location-info-box">
+        <h1>Informations sur l'emplacement</h1>
       </div>
 
-      <div class="space-y-2 text-sm text-zinc-400">
-        <p class="flex justify-between">
-          <span data-i18n="localTime">🕒 Local time</span>
-          <span id="countryTime" class="text-white font-medium">...</span>
-        </p>
-        <p class="flex justify-between">
-          <span data-i18n="languages">🗣️ Languages</span>
-          <span id="countryLang" class="text-white font-medium text-right truncate w-32">...</span>
-        </p>
-        <p class="flex justify-between">
-          <span data-i18n="population">👥 Population</span>
-          <span id="countryPop" class="text-white font-medium">...</span>
-        </p>
-      </div>
-    </div>
-    <div id="location-info-box" class="location-info-box">
-      <h1>Informations sur l'emplacement</h1>
+      <main id="globe" class="w-full flex-1 h-full active:cursor-grabbing"></main>
     </div>
 
-    <main id="globe" class="w-full flex-1 h-full active:cursor-grabbing"></main>
-  </div>
-
-  <script type="module" src="main.js"></script>
-</body>
-
+    <script type="module" src="main.js"></script>
+  </body>
 </html>
