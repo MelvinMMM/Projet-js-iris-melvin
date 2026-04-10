@@ -86,31 +86,31 @@
         </div>
 
         <div class="relative flex-1 min-w-1 md:min-w-0 md:max-w-sm">
-          <form class="w-full">
+            <form class="w-full">
             <label for="Search" class="block mb-2.5 text-sm font-medium text-heading sr-only">Search</label>
             <div class="relative">
               <div class="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  class="w-4 h-4 text-body pointer-events-none absolute text-zinc-400 z-99"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                </svg>
+              <svg
+                class="w-4 h-4 text-white pointer-events-none absolute z-99"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+              </svg>
               </div>
               <input
-                type="search"
-                id="search"
-                class="block w-full p-2 ps-9 bg-white/10 backdrop-blur-sm border border-zinc-700/80 shadow-2xl text-gray-50 text-sm rounded-2xl transition-colors duration-200 placeholder:text-zinc-400 focus:bg-zinc-800/95 focus:border-white/70 focus:ring-2 focus:ring-white/35 focus:outline-none"
-                placeholder="Search"
-                required
+              type="search"
+              id="search"
+              class="block w-full p-2 ps-9 bg-white/10 backdrop-blur-sm border border-zinc-700/80 shadow-2xl text-white text-sm rounded-2xl transition-colors duration-200 placeholder:text-white focus:bg-zinc-800/95 focus:border-white/70 focus:ring-2 focus:ring-white/35 focus:outline-none"
+              placeholder="Search"
+              required
               />
             </div>
-          </form>
+            </form>
           <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
         </div>
       </div>

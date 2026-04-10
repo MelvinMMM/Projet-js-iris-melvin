@@ -45,8 +45,7 @@ async function fetchData() {
 
 async function fetchCountry() {
   try {
-    const response = await fetch('/datasets/ne_110m_admin_0_countries.geojson');
-
+    const response = await fetch(`${import.meta.env.BASE_URL}datasets/ne_110m_admin_0_countries.geojson`);
     if (!response.ok) {
       throw new Error(`Erreur HTTP: ${response.status}`);
     }
@@ -405,7 +404,7 @@ export function initSearch(earth, countriesData, eventsData) {
 
 import i18next from './i18n.js';
 
-export function updateDOMTranslation() {
+export function updateDOMTranslation(earth) {
 
   document.querySelectorAll('[data-i18n]').forEach(element => {
     const key = element.getAttribute('data-i18n');
