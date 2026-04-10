@@ -20,7 +20,8 @@ body {
 
 .location-info-box {
   position: absolute;
-  top: 200px;
+  top: auto;
+  bottom: 20px;
   right: 50px;
   width: 400px;
   min-height: 200px;
@@ -69,6 +70,7 @@ body {
   animation: slideIn 0.3s ease-out;
 }
 
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -105,5 +107,18 @@ body {
   text-decoration: none;
 }
 
+@media (max-width: 768px) {
+  .location-info-box {
+    position: absolute;
+    top: auto;
+    bottom: 90px;
+    right: 20px;
+    width: calc(100% - 40px);
+    padding: 1rem;
+  } 
 
 
+    
+
+  
+}
