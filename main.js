@@ -20,9 +20,9 @@ function isMobileViewport() {
 } 
 
 const earth = Globe()(earthDiv, { animateIn: false })
-    .globeImageUrl(`${import.meta.env.BASE_URL}assets/earth-blue-marble.jpg`)
-    .bumpImageUrl(`${import.meta.env.BASE_URL}assets/earth-topology.png`)
-    .backgroundImageUrl(`${import.meta.env.BASE_URL}assets/night-sky.png`)
+    .globeImageUrl(`assets/earth-blue-marble.jpg`)
+    .bumpImageUrl(`assets/earth-topology.png`)
+    .backgroundImageUrl(`assets/night-sky.png`)
     .width(getGlobeSize().width) 
     .height(getGlobeSize().height);
 
@@ -39,7 +39,7 @@ requestAnimationFrame(() => {
     earth.pointOfView({ lat: 0, lng: 0, altitude: isMobileViewport() ? 3.9 : 2.8 }, 0);
 });
 
-new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}assets/clouds.png`, cloudsTexture => {    const clouds = new THREE.Mesh(
+new THREE.TextureLoader().load(`assets/clouds.png`, cloudsTexture => {    const clouds = new THREE.Mesh(
         new THREE.SphereGeometry(earth.getGlobeRadius() * (1 + 0.001), 75, 75),
         new THREE.MeshPhongMaterial({ map: cloudsTexture, transparent: true })
     );
