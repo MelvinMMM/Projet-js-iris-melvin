@@ -318,8 +318,19 @@ export async function loadData(earth) {
   }
 
   const checkboxes = document.querySelectorAll('#filters-container input[type="checkbox"]');
+  const memoire = localStorage.getItem('saved_filters');
+  if(memoire) {
+    const arrayJS = JSON.parse(memoire);
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = arrayJS.includes(checkbox.id);
+    });
+  }
+
+
   checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', updateGlobeData);
+
+    localStorage.setItem('saved_filters', JSON.stringify(Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.id)));
   });
 
   updateGlobeData();

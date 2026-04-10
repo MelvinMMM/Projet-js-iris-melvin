@@ -110,7 +110,7 @@ window.addEventListener("mousedown", () => {
 
 window.addEventListener("mouseup", () => {
 if (isPointerHolding) {
-        earth.controls().autoRotate = isAutoRotateEnabled;    isPointerHolding = false;
+        earth.controls().autoRotate = isRotateEnabled;    isPointerHolding = false;
 }
 }, false);
 
@@ -121,23 +121,7 @@ movement.addEventListener('click', () => {
 
 
 
-movement.innerHTML = playIcon; 
-// `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-//   <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-// </svg>
-//`;
-movement.addEventListener('click', () => {
-    earth.controls().autoRotate = !earth.controls().autoRotate;
-    const Rotating = earth.controls().autoRotate;
-    movement.innerHTML = Rotating ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-</svg>
-` : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
 
-</svg>
-`;
-});
 
 const zoomOut = document.getElementById('zoomOut');
 zoomOut.addEventListener('click', () => {
