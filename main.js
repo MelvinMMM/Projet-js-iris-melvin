@@ -62,31 +62,66 @@ earth.onGlobeClick(({ lat, lng }) => {
     earth.pointOfView({ lat, lng, altitude: 0.5 }, 1000);
 });
 
-window.addEventListener("mousedown", () => {
-    earth.controls.autoRotate = false;
-}, false);
 
-window.addEventListener("mouseup", () => {
-    earth.controls.autoRotate = true;
-}, false);
 
 const movement = document.getElementById('movement');
-movement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-</svg>
-`;
-movement.addEventListener('click', () => {
-    earth.controls().autoRotate = !earth.controls().autoRotate;
-    const Rotating = earth.controls().autoRotate;
-    movement.innerHTML = Rotating ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-</svg>
-` : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
 
+const playIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
 </svg>
 `;
+
+const stopIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+</svg>
+`;
+
+let isRotateEnable = true;
+let isPointerHolding = false;
+
+function syncIconWithState() {
+    movement.innerHTML = isRotateEnable ? playIcon : stopIcon;
+}
+
+function setAutoRotate(enable) {
+    isRotateEnable = enable;
+    earth.controls().autoRotate = enable;
+    syncIconWithState();
+} 
+
+function toggleAutoRotate() {
+    setAutoRotate(!isRotateEnable);
+}
+syncIconWithState();
+
+window.addEventListener('keydown', (event) => {
+    if (event.code === 'Space' && !event.repeat) {
+        event.preventDefault();
+        earth.controls().autoRotate = false;
+        toggleAutoRotate();
+    }
+}, false);
+
+window.addEventListener("mousedown", () => {
+    earth.controls().autoRotate = false;
+    isPointerHolding = true;
+}, false);
+
+
+window.addEventListener("mouseup", () => {
+if (isPointerHolding) {
+        earth.controls().autoRotate = isRotateEnabled;    isPointerHolding = false;
+}
+}, false);
+
+
+movement.addEventListener('click', () => {
+    toggleAutoRotate();
 });
+
+
+
+
 
 const zoomOut = document.getElementById('zoomOut');
 zoomOut.addEventListener('click', () => {

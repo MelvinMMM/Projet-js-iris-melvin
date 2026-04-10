@@ -8,6 +8,7 @@
   </head>
   <body>
     <div id="loading" class="m-auto w-full h-full flex flex-col items-center fixed z-100 transition-opacity duration-1000 ease-in-out justify-center bg-black px-4">
+      <h1 class="absolute text-center  text-white top-2/6 size-3.5 w-full"><em>Event-Horizon</em></h1>
       <img src="assets/ellipsisLoading.svg" alt="loading" class="object-contain w-20 sm:w-28 md:w-32 lg:w-48" />
     </div>
     <div class="flex h-dvh w-full bg-transparent relative min-h-screen">
@@ -139,9 +140,14 @@
           </p>
         </div>
       </div>
-      <div id="location-info-box" class="location-info-box w-full md:w-64 absolute top-4 left-1/2 -translate-x-1/2 p-4 pointer-events-none">
+      <div id="location-info-box" class="location-info-box ">
         <h1>Informations sur l'emplacement</h1>
       </div>
+
+      <p class="absolute bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-10 w-[calc(60%-1rem)] sm:w-auto px-3 py-1.5 text-[11px] sm:text-xs text-center text-zinc-400 pointer-events-none ">
+        <!-- <em class="sm:hidden">Glisse, pince et touche un point.</em> -->
+        <em class=" sm:inline">Glisse pour tourner, molette pour zoomer, clic sur un point pour ouvrir ses infos.</em>
+      </p>
 
       <main id="globe" class="w-full flex-1 h-full min-h-dvh active:cursor-grabbing"></main>
     </div>
