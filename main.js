@@ -116,7 +116,6 @@ earth.onPointClick((point) => {
         lng: point.lng,
     });
     locationInfoBoxElement.classList.add('open');
-    console.log("Point cliqué :", point);
 });
 
 Promise.all([loadCountries(earth), loadData(earth)])

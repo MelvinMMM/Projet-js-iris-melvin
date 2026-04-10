@@ -173,7 +173,6 @@ export async function updateCountryDetails(isoCode) {
 
 export async function loadData(earth) {
   const data = await fetchData();
-  console.log("Données récupérées :", data);
 
   const fireData = data.events
     .filter(event => event.categories[0].id === 'wildfires')
@@ -326,120 +325,6 @@ export async function loadData(earth) {
 
   updateGlobeData();
 
-  console.log("Données formatées pour les tempêtes en mer :", seaData);
-  console.log("Données formatées pour les feux :", fireData);
-  console.log("Données formatées pour les volcans :", volcaData);
-  console.log("Données formatées pour les tempêtes :", stormData);
-  console.log("Données formatées pour les tremblements de terre :", earthquakeData);
-
-  // const chartCanvas = document.getElementById('chart');
-  // new Chart(chartCanvas, {
-  //   type: 'bar',
-  //   data: {
-  //     datasets: [
-  //       { fill: 'origin' },
-
-  //       { fill: '+2' },
-
-  //       { fill: 1 },
-
-  //       { fill: false },
-
-  //       { fill: '-2' },
-
-  //       { fill: { value: 25 } }
-
-  //     ]
-  //   },
-  //   options: {
-  //     scales: {
-  //       y: {
-  //         beginAtZero: true
-  //       }
-  //     }
-  //   }
-  // });
-
-  // const fireEvents = data.events.filter(event => event.categories[0].id === 'wildfires');
-
-  // const firesPerYear = {};
-
-  // fireEvents.forEach(event => {
-
-  //   if (event.geometry && event.geometry.length > 0 && event.geometry[0].date) {
-
-  //     const year = new Date(event.geometry[0].date).getFullYear();
-
-  //     if (firesPerYear[year]) {
-  //       firesPerYear[year]++;
-  //     } else {
-  //       firesPerYear[year] = 1;
-  //     }
-  //   }
-  // });
-
-  // const years = Object.keys(firesPerYear).sort();
-
-  // const fireCounts = years.map(year => firesPerYear[year]);
-
-  // const ctxLine = document.getElementById('fireLineChart').getContext('2d');
-
-  // if (window.fireChartInstance) {
-  //   window.fireChartInstance.destroy();
-  // }
-
-  // window.fireChartInstance = new Chart(ctxLine, {
-  //   type: 'line',
-  //   data: {
-  //     labels: years,
-
-  //     datasets: [{
-  //       label: 'Number of forest fire incidents',
-  //       data: fireCounts,
-
-  //       borderColor: '#ff4500',
-
-  //       backgroundColor: 'rgba(255, 69, 0, 0.2)',
-
-  //       borderWidth: 2,
-  //       pointBackgroundColor: '#ff4500',
-  //       pointBorderColor: '#fff',
-  //       pointRadius: 4,
-  //       fill: true,
-
-  //       tension: 0.3
-
-  //     }]
-  //   },
-  //   options: {
-  //     responsive: true,
-  //     plugins: {
-  //       title: {
-  //         display: true,
-  //         text: 'Evolution of forest fires by year',
-  //         font: { size: 16 }
-  //       },
-  //       legend: {
-  //         display: true
-  //       }
-  //     },
-  //     scales: {
-  //       y: {
-  //         beginAtZero: true,
-  //         title: {
-  //           display: true,
-  //           text: 'Number of fires'
-  //         }
-  //       },
-  //       x: {
-  //         title: {
-  //           display: true,
-  //           text: 'Year'
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
   return data;
 }
 
