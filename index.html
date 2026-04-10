@@ -21,7 +21,7 @@
         <div>
           <button
             id="movement"
-            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800/40 hover:bg-zinc-700/55 border border-zinc-100 rounded-full transition-all text-xs p-2 mb-2 cursor-pointer  backdrop-blur-sm"
+            class="w-full flex font-medium text-gray-950 dark:text-white justify-center bg-zinc-800/40 hover:bg-zinc-700/55 border border-zinc-100 rounded-full transition-all text-xs p-2 mb-2 cursor-pointer backdrop-blur-sm"
             aria-label="Toggle globe rotation"
           ></button>
         </div>
@@ -41,20 +41,20 @@
           </button>
         </div>
       </section>
-      <div class="absolute top-4 left-24 md:left-30 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 w-44 md:w-52 transition-all">
-        <details class="group p-3">
-          <summary class="flex justify-between items-center text-l font-semibold cursor-pointer list-none">
+      <div class="absolute top-4 left-24 md:left-30 z-10 w-44 md:w-52 bg-white/10 backdrop-blur-md border border-zinc-700/80 shadow-2xl text-gray-50 rounded-2xl transition-colors duration-200 ">
+        <details class="group p-2 rounded-full cursor-pointer text-zinc-300">
+          <summary class="flex justify-between items-center text-sm font-medium cursor-pointer list-none">
             <span data-i18n="filters">Filters</span>
-            <span class="transition-transform duration-300 group-open:rotate-180">
+            <span class="transition-transform duration-300 group-open:rotate-180 text-zinc-300">
               <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
                 <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </span>
           </summary>
 
-          <div class="mt-4 pt-4 border-t border-zinc-700/50">
-            <h3 class="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-3" data-i18n="category">Category</h3>
-            <div id="filters-container" class="space-y-2 text-base">
+          <div class="mt-3 pt-3 border-t border-zinc-700/70">
+            <h3 class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-3" data-i18n="category">Category</h3>
+            <div id="filters-container" class="space-y-2 text-sm text-zinc-100">
               <div class="flex items-center gap-2">
                 <input type="checkbox" id="wildfires" name="wildfires" value="Wildfires" checked class="accent-[#ff4500] check w-4 h-4 cursor-pointer" />
                 <label for="wildfires" class="cursor-pointer select-none">Wildfires</label>
@@ -83,14 +83,35 @@
           </div>
         </details>
       </div>
+
       <div class="absolute top-4 z-10 w-60 transition-all left-4 md:left-90">
-        <input
-          type="text"
-          id="search"
-          data-i18n-placeholder="searchPlaceholder"
-          placeholder="&#128269; Search..."
-          class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 rounded-2xl shadow-2xl text-gray-50 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1"
-        />
+        <form class="max-w-md mx-auto">
+          <label for="Search" class="block mb-2.5 text-sm font-medium text-heading sr-only">Search</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg
+                class="w-4 h-4 text-body pointer-events-none absolute text-zinc-400 z-99"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search"
+              class="block w-full p-2 ps-9 bg-white/10 backdrop-blur-sm border border-zinc-700/80 shadow-2xl text-gray-50 text-sm rounded-2xl transition-colors duration-200 placeholder:text-zinc-400 focus:bg-zinc-800/95 focus:border-white/70 focus:ring-2 focus:ring-white/35 focus:outline-none"
+              placeholder="Search"
+              required
+            />
+
+          </div>
+        </form>
+        -
         <ul id="searchResults" class="hidden absolute top-full left-0 w-full mt-2 bg-zinc-900/90 border border-zinc-700 rounded-xl max-h-60 overflow-y-auto z-20 shadow-2xl text-gray-50"></ul>
       </div>
       <!-- <div
