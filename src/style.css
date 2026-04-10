@@ -2,10 +2,20 @@
 
 /********** Personnalisation globale **********/
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
 #globe {
   display: block;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+
+  min-height: 100%;
 }
 
 .location-info-box {
@@ -94,3 +104,6 @@
   color: white;
   text-decoration: none;
 }
+
+
+
