@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist" 
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/MelvinMMM/Projet-js-iris-melvin/issues"
   },
-  "homepage": "https://github.com/MelvinMMM/Projet-js-iris-melvin#readme",
+  "homepage": "https://github.com/MelvinMMM/Projet-js-iris-melvin/",
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
     "gh-pages": "^6.3.0",
