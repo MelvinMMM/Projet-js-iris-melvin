@@ -8,20 +8,39 @@ const earthDiv = document.getElementById('globe');
 const locationInfoBoxElement = document.getElementById('location-info-box');
 const loadingElement = document.getElementById('loading');
 
+function getGlobeSize() {
+    return {
+        width: earthDiv.clientWidth || window.innerWidth,
+        height: earthDiv.clientHeight || window.innerHeight
+    };
+}  // Permet d'obtenir la taille du globe en fonction de la taille de la fenêtre
+
+function isMobileViewport() {
+    return window.matchMedia('(max-width: 767px)').matches;
+} // Permet de détecter si l'utilisateur est sur un appareil mobile
+
 // Création du globe
 const earth = Globe()(earthDiv, { animateIn: false })
     .globeImageUrl('assets/earth-blue-marble.jpg')
     .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/night-sky.png')
-    .width(earthDiv.offsetWidth);
+    .width(getGlobeSize().width) 
+    .height(getGlobeSize().height);
+// Permet de créer le globe avec les bonnes dimensions dès le départ
 
 window.addEventListener('resize', () => {
-    earth.width(earthDiv.offsetWidth);
-    earth.height(earthDiv.offsetHeight);
-});
+    const { width, height } = getGlobeSize();
+    earth.width(width);
+    earth.height(height);
+});// Permet de redimensionner le globe lorsque la fenêtre est redimensionnée
 
 earth.controls().autoRotate = true;
 earth.controls().autoRotateSpeed = 0.35;
+
+// On mobile, start a bit farther from the globe so it appears smaller.
+requestAnimationFrame(() => {
+    earth.pointOfView({ lat: 0, lng: 0, altitude: isMobileViewport() ? 3.9 : 2.8 }, 0);
+});// Permet de positionner le globe à une altitude plus élevée sur mobile pour qu'il soit plus petit et mieux adapté à l'écran
 
 // Les nuages
 new THREE.TextureLoader().load('./assets/clouds.png', cloudsTexture => {
